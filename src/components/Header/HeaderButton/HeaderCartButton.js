@@ -12,10 +12,13 @@ const HeaderCartButton = (props) => {
     return currNumber + item.amount;
   }, 0);
 
+  // default is classes.button
+  // once useEffect is executed and changes the class to bump
   const btnClasses = `${classes.button} ${btnBump ? classes.bump : ""}`;
 
   const { items } = cartCtx;
 
+  // useEffect to add the animation to cart
   useEffect(() => {
     if (items.length === 0) {
       return;

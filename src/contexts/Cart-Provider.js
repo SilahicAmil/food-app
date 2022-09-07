@@ -6,34 +6,44 @@ const defaultCartState = {
   totalAmount: 0,
 };
 
+// using reducer since the add and remove item state is more compliacted
+
 const cartReducer = (state, action) => {
   if (action.type === "ADD_ITEM") {
     const updatedTotalAmount =
       state.totalAmount + action.item.price * action.item.amount;
 
+    // index is item.id that equals the action.item.id
     const exisitngCartItemIndex = state.items.findIndex(
       (item) => item.id === action.item.id
     );
-
+    // index the state.items on the exisitingCartItemIndex
     const existingCartItem = state.items[exisitngCartItemIndex];
     let updatedItems;
 
+    // if the cart item exists
     if (existingCartItem) {
+      // update the updatedItem by spreading the cart items
+      // then setting the amount to cart item amount plus the action item amount
       const updatedItem = {
         ...existingCartItem,
         amount: existingCartItem.amount + action.item.amount,
       };
+      //   then spread the state.items into updatedItems
+      //   which is the updated items so far
       updatedItems = [...state.items];
+      //   then set the updatedItems with the cart item index to the updated item
       updatedItems[exisitngCartItemIndex] = updatedItem;
     } else {
       updatedItems = state.items.concat(action.item);
     }
-
+    // Now return the updated items and totalAmount
     return {
       items: updatedItems,
       totalAmount: updatedTotalAmount,
     };
   }
+  //   below if statement is the reverse of the above essentially
   if (action.type === "REMOVE_ITEM") {
     const exisitngCartItemIndex = state.items.findIndex(
       (item) => item.id === action.id
