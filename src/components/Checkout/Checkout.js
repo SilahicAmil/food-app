@@ -6,6 +6,7 @@ const isEmpty = (value) => value.trim() === "";
 const isFiveChars = (value) => value.trim().length === 5;
 
 const Checkout = (props) => {
+  // Make this all a custom form hook
   const [formInputsValid, setFormInputsValid] = useState({
     name: true,
     street: true,
@@ -50,6 +51,12 @@ const Checkout = (props) => {
       return;
     }
     // submit cart data here
+    props.onConfirm({
+      name: enteredName,
+      street: enteredStreet,
+      city: enteredCity,
+      postalCode: enteredPostalCode,
+    });
   };
 
   const nameControlClasses = `${classes.control} ${
